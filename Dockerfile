@@ -1,4 +1,6 @@
-FROM gradle:3.3-jdk-8-onbuild
-MAINTAINER Nastya <temnovastudy@gmail.com>
+FROM gradle:alpine
+ADD . app
+RUN app/gradlew jarWithDependencies
 ENV PORT 80
-CMD java -jar /target/jsonValidatorGradle.jar
+EXPOSE 80
+CMD ["java","-jar","/target/jsonValidatorGradle.jar"]
