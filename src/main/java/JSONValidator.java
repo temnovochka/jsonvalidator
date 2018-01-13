@@ -13,26 +13,42 @@ import java.net.InetSocketAddress;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Class implements Server interface
+ * <p>
+ * Task of the class is checking validation of Json file
+ */
 public class JSONValidator{
     private static Logger log = Logger.getLogger(JSONValidator.class.getName());
 
     private static final int RETURN_CODE = 250;
 
-    /* server instance */
+    /* Server instance */
     private HttpServer server;
-    /* JSON builder from String instance*/
+    /* JSON builder from String instance */
     private Gson gsonBuilder;
 
-    /* Main method*/
+    /**
+     * Main method used for starting server
+     *                      waiting for a Json files
+     *                      and checking validation of Json files
+     *
+     * @throws IOException  If an input or output exception occurred
+     */
     public JSONValidator() throws IOException {
-        /* Init objects*/
+        /* Initialization of objects*/
         server = HttpServer.create();
         gsonBuilder = new GsonBuilder().setPrettyPrinting().create();
 
-        /* Bind server to specific port*/
+        /* Bind server to specific port */
         server.bind(new InetSocketAddress(80), 0);
         server.createContext("/", new HttpHandler() {
-            /* Function to handle input from client */
+            /**
+             * Function to handle input from client
+             *
+             * @param exchange  Http Request and respond object
+             * @throws IOException  If an input or output exception occurred
+             */
             public void handle(HttpExchange exchange) throws IOException {
                 /* Stream, that read from socket */
                 InputStreamReader inputStreamReader = new InputStreamReader(exchange.getRequestBody());
@@ -70,10 +86,16 @@ public class JSONValidator{
         });
     }
 
+    /**
+     * Implements method of bind server to HTTP port and start listening.
+     */
     public void start(){
         this.server.start();
     }
 
+    /**
+     * Implements method of stop listening and free all the resources.
+     */
     public void stop (){
         this.server.stop(0);
     }
