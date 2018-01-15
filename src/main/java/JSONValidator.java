@@ -56,6 +56,7 @@ public class JSONValidator{
                 /* Log results*/
                 log.info(httpString);
                 String jsonString = null;
+                int request_id = 0;
 
                 try{
                     /* Trying to build json
@@ -67,14 +68,25 @@ public class JSONValidator{
                 catch(JsonSyntaxException ex){
                     /* Forming error object to return to client */
                     JsonObject error = new JsonObject();
-                    error.addProperty("Code", ex.hashCode());
-                    error.addProperty("Message", ex.getMessage());
+                    String[] errorParseString = ex.getMessage().split(".+: | at ");
+                    error.addProperty("errorCode", ex.hashCode());
+                    //error.addProperty("Message", ex.getMessage());
+                    error.addProperty("errorMessage", errorParseString[1]);
+                    //String errorPlace = new String("at " + errorParseString[2]);
+                    String errorPlace = "at " + errorParseString[2];
+                    error.addProperty("errorPlace", errorPlace);
+                    error.addProperty("resource", exchange.getRequestURI().getPath());
+                    error.addProperty("request-id", request_id);
+
 
                     /* Exception logging */
                     log.warning("Exception rised!");
                     log.warning(ex.getMessage());
 
                     jsonString = gsonBuilder.toJson(error);
+                }
+                finally {
+                    request_id++;
                 }
 
                 /* Return message to client */
