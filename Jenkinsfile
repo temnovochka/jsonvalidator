@@ -9,6 +9,7 @@ pipeline {
 	    }
 	    stage('Building') {
 	    	steps {
+	    	    sh 'chmod +x gradlew'
 		        sh './gradlew docker'
 		        echo 'Building executed'
 		    }
