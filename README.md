@@ -37,7 +37,7 @@ Example of service response in case of error:
 
 How to build and run this project with gradle.
  
-    ./gradlew docker && docker run -d —rm -p 80:80 jv
+    ./gradlew docker && docker run -d —rm -p 80:80 jvalidator
     curl --upload-file file.json http://localhost
  
  Or:
