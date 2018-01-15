@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class JSONValidator{
     private static Logger log = Logger.getLogger(JSONValidator.class.getName());
 
-    private static final int RETURN_CODE = 250;
+    private static final int RETURN_CODE = 200;
 
     /* Server instance */
     private HttpServer server;
